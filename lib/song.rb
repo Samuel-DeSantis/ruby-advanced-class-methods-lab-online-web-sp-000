@@ -73,8 +73,58 @@ class Song
     song
   end
 
+<<<<<<< HEAD
   def self.destroy_all
     @@all.clear
+=======
+  def self.find_or_create_by_name(name)
+    @name = name
+    if find_by_name(@name) == false
+      create_by_name(@name)
+    else
+      find_by_name(@name)
+    end
+  end
+
+  def self.alphabetical
+    @@all.sort_by { |object| object.name }
+  end
+
+  def self.new_from_filename(file_name)
+    @file_name = file_name
+    from_file(@file_name)
+    song
+  end
+
+  def self.create_from_filename(file_name)
+    @file_name = file_name.split(" - ")
+    @artist_name = @file_name[0]
+    @song_name = @file_name[1]
+    @song_name.delete_suffix!(".mp3")
+
+    song = Song.new
+    song.name = @song_name
+    song.artist_name = @artist_name
+    song.save
+    song
+  end
+
+  def self.destroy_all
+    @@all.clear
+  end
+
+  private
+
+  def from_file(file_name)
+    @file_name = file_name.split(" - ")
+    @artist_name = @file_name[0]
+    @song_name = @file_name[1]
+    @song_name.delete_suffix!(".mp3")
+
+    song = Song.new
+    song.name = @song_name
+    song.artist_name = @artist_name
+>>>>>>> c79efe0b70964e980ed951a727c5e68ac57c3e5a
   end
 
 end
